@@ -14,12 +14,6 @@ processor*/
 0.[0-9]*/
 
 # ---- post-processing & solver bookkeeping ---------------------------------
-postProcessing/
-*.foam
-*.OpenFOAM
-log.*
-logs/
-*.log
 dynamicCode/
 
 # ---- mesh & snappy intermediates (rebuild with runallgeo.sh) --------------
@@ -30,9 +24,6 @@ savedMesh/
 # big geometry copied into triSurface by runallgeo.sh (lives in geo/ already)
 constant/triSurface/Mesh_*.obj
 
-# ---- heavy field dumps in results (keep the CSV/txt tables + pp_*) ---------
-results/**/T_*
-
 # ---- Python / workflow caches ---------------------------------------------
 __pycache__/
 *.pyc
@@ -40,10 +31,32 @@ __pycache__/
 
 # ---- too big for GitHub (>100 MB) or not needed to run current cases ------
 canopy/merged.obj
-bigger_terrain_results/
 
 # ---- OS / editor cruft ----------------------------------------------------
 .DS_Store
 *~
 .vscode/
 .idea/
+
+# ---- solver / job logs (regenerable) --------------------------------------
+*.err
+*.out
+log.*
+logs/
+
+# ---- per-run results (regenerable: rerun the dispersion driver) ------------
+results/
+
+# ---- stale top-level driver (the real one is cases/run_single_hour.sh) -----
+/run_single_hour.sh
+
+# ---- redundant geometry copies (canonical set: cases/flowCase/geo/) --------
+cases/dispersionCase/geo/Mesh_*.obj
+cases/flowCaseOldBC/geo/Mesh_*.obj
+
+# ---- 24h sweep workflow artefacts (regenerable) ---------------------------
+cases/workflow/runs/
+cases/workflow/results_transient/
+
+# ---- big-domain recentred geometry (regenerate via preprocess_geometry.py) -
+cases/flowCaseBig/geo/Mesh_*.obj
